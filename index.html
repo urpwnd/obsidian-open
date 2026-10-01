@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Open in Obsidian</title>
+<style>
+  :root { color-scheme: light dark; --bg:#eceef1; --fg:#1a1c23; --muted:#5a5f6d; --accent:#7b1f2d; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111217; --fg:#e7e4dd; --muted:#9a9fac; --accent:#e07a88; } }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--fg);
+         font:16px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif; padding:16px; box-sizing:border-box; }
+  main { max-width:28rem; text-align:center; display:grid; gap:12px; }
+  .note { font-weight:600; word-break:break-word; }
+  a.btn { display:inline-block; padding:12px 18px; border-radius:999px; background:var(--accent); color:var(--bg); text-decoration:none; font-weight:600; }
+  .muted { color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <p class="muted" id="status">Opening in Obsidian…</p>
+  <p class="note" id="note"></p>
+  <p><a class="btn" id="open" href="#">Open note in Obsidian</a></p>
+  <p class="muted">If nothing happens, tap the button. This page only hands the link to the Obsidian app; it stores nothing.</p>
+</main>
+<script>
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var vault = p.get("vault"), file = p.get("file");
+    var status = document.getElementById("status"), btn = document.getElementById("open");
+    if (!vault || !file) { status.textContent = "No note given."; btn.hidden = true; return; }
+    var url = "obsidian://open?vault=" + encodeURIComponent(vault) + "&file=" + encodeURIComponent(file);
+    document.getElementById("note").textContent = file;
+    btn.href = url;
+    location.replace(url);
+  })();
+</script>
+</body>
+</html>

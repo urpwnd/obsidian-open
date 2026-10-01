@@ -33,6 +33,12 @@
     document.getElementById("note").textContent = file;
     btn.href = url;
     location.replace(url);
+    // Close this helper tab once Obsidian has taken over. Browsers only allow this
+    // for tabs opened by a script; where it is refused, the tab simply stays.
+    var closeTab = function () { try { window.close(); } catch (e) {} };
+    document.addEventListener("visibilitychange", function () { if (document.hidden) setTimeout(closeTab, 300); });
+    setTimeout(closeTab, 2500);
+    setTimeout(function () { status.textContent = "Opened in Obsidian. You can close this tab."; }, 3000);
   })();
 </script>
 </body>
